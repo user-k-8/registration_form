@@ -22,7 +22,7 @@ const handleInputChange = event=>{
 const handleSubmit =(event)=>{
   event.preventDefault();
 
-  fetch('http://localhost:4000/api/login', {
+  fetch('https://registration-form-tv9c.onrender.com/api/login', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -55,7 +55,7 @@ const submitGoogleUser =(user)=>{
 
   if(user.username){
 
-    fetch('http://localhost:4000/api/googlelogin', {
+    fetch('https://registration-form-tv9c.onrender.com/api/googlelogin', {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json'

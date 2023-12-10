@@ -9,7 +9,7 @@ const Profile = () => {
   const [buttonDisplay, setButtonDisplay] = React.useState("block")
 
   const token = localStorage.getItem("token");
-  const decodedToken = token !== 'undefined' ? jwtDecode(token) : "";
+  const decodedToken = token && token!== 'undefined' ? jwtDecode(token) : "";
   const username = decodedToken.username
   const email = decodedToken.email
 
@@ -25,7 +25,7 @@ const Profile = () => {
 
   const showProfileInfo = ()=>{
 
-    fetch('http://localhost:4000/api/profile-info', {
+    fetch('https://registration-form-tv9c.onrender.com/api/profile-info', {
       method: 'GET',
       headers: {
         'access-token': token

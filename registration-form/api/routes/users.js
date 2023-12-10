@@ -160,7 +160,7 @@ router.post('/forgot-password', async(req,res)=>{
     const user_id = result[0].user_id
     const token = jwt.sign({email: result[0].email, user_id: user_id}, jwt_secret, {expiresIn: '20m'});
    
-    const link = `http://localhost:4000/api/reset-password/${user_id}/${token}`;
+    const link = `https://registration-form-tv9c.onrender.com/api/reset-password/${user_id}/${token}`;
     console.log(link)
     //send email
     const transporter = nodemailer.createTransport({

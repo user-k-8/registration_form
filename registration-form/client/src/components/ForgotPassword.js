@@ -18,7 +18,7 @@ const ForgotPassword = () => {
     const handleSubmit =(event)=>{
       event.preventDefault();
      
-      fetch('http://localhost:4000/api/forgot-password', {
+      fetch('https://registration-form-tv9c.onrender.com/api/forgot-password', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
