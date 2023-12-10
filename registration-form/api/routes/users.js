@@ -118,6 +118,9 @@ router.post('/login',  async (req, res)=>{
 
 router.post('/googlelogin',  async (req, res)=>{
 
+  res.header('Access-Control-Allow-Origin', process.env.url);
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+
   const {username,email, rememberMe}= req.body
      console.log(email)
      //check for email
