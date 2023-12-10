@@ -122,7 +122,7 @@ input::placeholder{
 
 .help-text{
   color:red;
-width: 95%;
+  width: 80%;
 text-align: left;
 }
 .register-container-right{

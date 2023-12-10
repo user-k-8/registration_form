@@ -146,12 +146,12 @@ const submitGoogleUser =(user)=>{
                 <form onSubmit={handleSubmit}>        
                   
                   <input type="text" id="username" name="username" value={form.username} placeholder='Name'  onChange={validateNameInput} required/>     
-                  <span className='help-text' style={{display: helpText.username}} >Please enter a name containing at least 3 alphabetical characters</span>
+                  <div className='help-text' style={{display: helpText.username}} >Please enter a name containing at least 3 alphabetical characters</div>
                   
                   <input type="email" id="email" name="email" value={form.email} placeholder='Email'  onChange={handleInputChange} required/> 
                   
                   <input type="password" id="password" name="password" value={form.password} placeholder='Password' onChange={validatePasswordInput} required/>
-                  <span className='help-text' style={{display: helpText.password}}>Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one special character e.g   Q2wertyu2#</span>
+                  <div className='help-text' style={{display: helpText.password}}>Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one special character e.g   Q2wertyu2#</div>
                   
                   <div className='check-container'>
                       <input type="checkbox" id="rememberMe" name='rememberMe' checked={form.rememberMe} onChange={handleInputChange}/>    
