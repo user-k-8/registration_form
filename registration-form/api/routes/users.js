@@ -119,7 +119,7 @@ router.post('/login',  async (req, res)=>{
 router.post('/googlelogin',  async (req, res)=>{
 
   const {username,email, rememberMe}= req.body
-
+     console.log(email)
      //check for email
       const sql = `SELECT email  FROM users WHERE email = "${email}"`;
         db.query(sql,  (err, result)=> {

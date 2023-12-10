@@ -133,6 +133,7 @@ const submitGoogleUser =(user)=>{
                        const userObject = jwtDecode(credentialResponse.credential)
                        console.log(userObject)
                        const userDetails = {username: userObject.name,  email: userObject.email, password:"", rememberMe: true}
+                       console.log(userDetails)
                        submitGoogleUser(userDetails)
                      }}
                      onError={() => {
