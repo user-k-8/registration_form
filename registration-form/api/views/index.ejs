@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruix - Reset password</title>  
+    <script>
+        var status = '<%- JSON.stringify(status) %>';
+        if(JSON.parse(status)=="verified"){
+           
+                window.location.href = "http://localhost:3000/"
+            
+        }
+    </script>
+</head>
+<body>
+    <style>
+        body{
+           text-align: center;
+           font-family: Arial, Helvetica, sans-serif;
+           background-color: black;
+        }
+       .form-input{
+           border-radius: 8px;
+           border: 2px solid rgb(212, 210, 210);
+           padding: 9px 15px;
+           width: 220px;
+       }
+       h1{
+           font-size: 25px;
+       }
+       form>button{
+   
+           background: black;
+           color: white;
+           padding: 10px 15px;
+           border-radius: 50px;
+           font-size: 15px;
+       }
+      input::placeholder{
+        color: black;
+        font-size: 15px;
+        }
+        .form-container{
+            width: fit-content;
+            display: flex;
+            flex-direction: column;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .content{
+            width: fit-content;
+            height: fit-content;
+            padding: 30px;
+            margin-top: 40px;
+            background-color: white;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 15px;
+        }
+        
+        #help-text-password, #help-text-confirm-password{
+            max-width: 220px;
+            text-align: left;
+            color: red;
+            padding-bottom: 8px;
+            display: none;
+        }
+    </style>
+
+    <div class="content">
+        <div class="logo"><img src="/images/Logo (1).png" alt="Ruix logo"></div>
+        <h1><%= email%></h1>
+        <form action="" method="post" class="form-container">
+            <span>Create your new password</span> <br>
+             <input type="password" placeholder="Password" name="password" id="password" class="form-input"/><br>
+             <div id="help-text-password">Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one special character e.g   Q2wertyu2#</div>
+             <input type="password" placeholder="Confirm password" name="confirm-password" id="confirm-password" class="form-input"/><br>
+             <div  id="help-text-confirm-password">Passwords do not match</div>
+             <button type="submit">Submit</button>  
+        </form>
+    </div>
+
+
+
+
+
+<script>
+const form = document.querySelector('form');
+const passwordInput =document.querySelector("#password");
+const confirmPasswordInput =document.querySelector("#confirm-password");  
+const helpTextPassword =document.querySelector("#help-text-password");  
+const helpTextConfirmPassword =document.querySelector("#help-text-confirm-password");  
+
+let correctPassword =false;
+let confirmPassword = false;
+
+passwordInput.addEventListener('input', ()=>{
+    
+    const passwordValue =  passwordInput.value.trim();
+    const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$&+,:;=?@#|'<>.^*()%!-]).{8,}$/;
+
+     helpTextPassword.style.display = passwordValue.match(passwordPattern) ? "none" : "block";
+     correctPassword = passwordValue.match(passwordPattern) ? true : false;
+
+})
+
+confirmPasswordInput.addEventListener('input', ()=>{
+
+    const passwordValue =  passwordInput.value.trim();
+    const confirmPasswordValue = confirmPasswordInput.value.trim();
+
+    helpTextConfirmPassword.style.display = confirmPasswordValue.match(passwordValue) ? "none" : "block";
+    confirmPassword = confirmPasswordValue.match(passwordValue) ? true : false;
+    
+})
+
+form.addEventListener('submit', e =>{
+ 
+    e.preventDefault();
+    //if  input is valid, submit form
+    if(correctPassword && confirmPassword ){
+       form.submit();
+    }
+})
+
+</script>
+
+</body>
+</html>

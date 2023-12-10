@@ -1,0 +1,264 @@
+
+body{
+  background-color: black;
+  display: flex;
+  height: fit-content;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.register-container{
+  position: relative;
+  display: flex;
+  height: fit-content;
+  align-items: center;
+  justify-content: center;
+  width: 80vw;
+  overflow-x: hidden;
+  background-color: white;
+}
+
+.register-container-left{
+  flex: 0.5;
+  align-self: stretch;
+  height: 100%;
+  background-color: white;
+  padding: 30px 35px !important;
+
+}
+
+
+.logo{
+  max-height: 40px;
+  
+}
+
+.form-container{
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-top: 40px;
+}
+.forgot-form-container{
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-top: 150px;
+}
+.form-container>h1{
+  font-weight: 700;
+  font-size: 40px;
+  letter-spacing: -2px;
+}
+.form-container>h3{
+  font-weight: 400;
+  margin-top: -20px;
+}
+
+.google-btn-container{
+  width:90%;
+  margin-left: auto;
+  margin-right: auto;
+ display: flex;
+ justify-content: center;
+}
+
+.or-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.or-container>hr{
+  width: 20%;
+  margin: 0 10px;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+form>input{
+  width: 80%;
+  border-radius: 8px;
+  border: 2px solid rgb(212, 210, 210);
+  padding: 12px 15px;
+}
+form>button, .profile-btn{
+  width: 90%;
+  background: black;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 50px;
+  font-size: 15px;
+
+}
+input::placeholder{
+  color: black;
+  font-size: 15px;
+}
+
+.check-container{
+  width: 90%;
+  text-align: left;
+  margin-top: -10px;
+  display: flex;
+  gap: 10px;
+}
+.form-container>h4{
+  margin-top: 30px;
+  font-weight: 400;
+}
+
+.form-container>h4>span{
+   color: orange;
+}
+
+.help-text{
+  color:red;
+width: 95%;
+text-align: left;
+}
+.register-container-right{
+  padding: 25px;
+  flex: 0.5;
+  align-self: stretch;
+  min-height: 100vh;
+  height: 100%;
+  background: url('./components/img/Image.png') ;
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+}
+.register-container-right>img{
+  width: 100%;
+}
+
+.profile{
+  position: relative;
+}
+.profile-container{
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  height: 70%;
+  margin-top: 20px;
+  background-color: rgb(104, 104, 104);
+  width: 50vw;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+}
+.profile-container>.profile-image{
+  width: 300px;
+  height: 300px;
+  background: url('./components/img/Image.png') ;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  
+}
+.profile-container>img{
+  margin-bottom: 18px;
+}
+.profile-container>button{
+  width: 300px;
+  font-size: 20px;
+}
+.profile-container>span{
+  font-size: 20px;
+  color: black;
+}
+
+.redirect-container{
+  width: 300px;
+  height: fit-content;
+  background-color: white;
+  text-align: center;
+  border-radius: 20px;
+  padding: 35px;
+  margin-top: 50px;
+}
+
+@media(max-width: 800px){
+
+  .register-container{
+    flex-direction: column;
+   
+  }
+
+  .register-container-left{
+    width: 90%;
+   
+  }
+  
+  .google-button{
+    width: 78%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  form>input{
+    width: 70%;
+  }
+  .check-container{
+    width: 78%;
+  }
+  form>button{
+    width: 78%;
+  }
+
+  .forgot-form-container{
+  
+    margin-top: 50px;
+  }
+
+}
+
+
+@media(max-width: 550px){
+
+  .register-container{
+    width: 90vw;
+    border-radius: 25px;
+  }
+  .register-container-left{
+    padding: 20px 15px !important;
+  }
+.google-button{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  form>input{
+    width: 90%;
+  }
+  .check-container{
+    width: 100%;
+  }
+  form>button{
+    width: 100%;
+  }
+  .profile-container{
+    width: 90%;
+  }
+  .forgot-form-container{
+   width: 100%;
+  }
+}
+
+@media(max-width: 390px){
+
+  .register-container{
+    width: 94vw;
+    border-radius: 25px;
+  }
+}
