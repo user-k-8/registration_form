@@ -74,7 +74,7 @@ body('password').isLength({ min: 8 })
         });
   
     return res.status(200).json({message: "Registration successful"})
-}  });
+}});
 
 })
 
@@ -82,7 +82,7 @@ router.post('/login',  async (req, res)=>{
 
     const {email, password}= req.body
 
-    const sql = `SELECT email, password  FROM users WHERE email = "${email}"`;
+    const sql = `SELECT email, password, user_id, username  FROM users WHERE email = "${email}"`;
     db.query(sql, (err, result)=> {
           if (err) throw err;
           console.log(result)        
@@ -96,18 +96,12 @@ router.post('/login',  async (req, res)=>{
          const match =  bcrypt.compareSync(password, result[0].password);
          if (match) {
             console.log('logged in')
-    
-            const sql = `SELECT user_id, username FROM users WHERE email = "${email}"`;
-            db.query(sql, (err, result)=> {
-              if (err) throw err;
                      
-              const user_id = result[0].user_id
-              const username = result[0].username
-
-              const token = jwt.sign({user_id: user_id, username: username, email:email}, secret, {expiresIn: '300m'});
-              return res.json({Login: true, token});
-
-            });   
+            const user_id = result[0].user_id
+            const username = result[0].username
+            //generate token
+            const token = jwt.sign({user_id: user_id, username: username, email:email}, secret, {expiresIn: '300m'});
+            return res.json({Login: true, token});   
     
         } 
         else {
@@ -122,7 +116,7 @@ router.post('/googlelogin',  async (req, res)=>{
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
 
   const {username,email, rememberMe}= req.body
-     console.log(email)
+     
      //check for email
       const sql = `SELECT email  FROM users WHERE email = "${email}"`;
         db.query(sql,  (err, result)=> {
@@ -159,9 +153,8 @@ router.post('/forgot-password', async(req,res)=>{
   }
   else{
    // user exists
-    const jwt_secret = secret + result[0].password;
     const user_id = result[0].user_id
-    const token = jwt.sign({email: result[0].email, user_id: user_id}, jwt_secret, {expiresIn: '20m'});
+    const token = jwt.sign({email: result[0].email, user_id: user_id}, secret, {expiresIn: '20m'});
    
     const link = `https://registration-form-tv9c.onrender.com/api/reset-password/${user_id}/${token}`;
     console.log(link)
@@ -195,38 +188,28 @@ router.post('/forgot-password', async(req,res)=>{
        console.log('Email sent: ' + info.response);
      }
    });
-
    return res.send({message: "Email sent", status: 200});
   }
 
 })
 })
+
 //get reset password form
 router.get("/reset-password/:user_id/:token", async(req,res)=>{
 
   const {user_id, token} = req.params;
-  console.log(req.params)
-  const sql = `SELECT email, password  FROM users WHERE user_id = ${user_id}`;
-  db.query(sql, (err, result)=> {
-  if (err) throw err;
 
-  if(!result[0]){
-    console.log('User not registered in db');
-   return res.send({message: "User does not exist"});
-}
-const jwt_secret = secret + result[0].password;
-try{
-  const verify = jwt.verify(token, jwt_secret);
-  console.log(verify)
-  //render reset form
-  res.render("index", {email: verify.email, status:"not verified"})
+ try{
+   const decodedToken = jwt.verify(token, secret);
+   const email = decodedToken.email;
 
+    //render reset form
+    res.render("index", {email: email, status:"password not updated"})
+   
+}catch(error){
+  res.send("Not verified")
+  console.log(error)
 }
-catch(error){
-   res.send("Not verified")
-   console.log(error)
-}
-  })
 })
 
 //when user submits reset password form
@@ -235,29 +218,22 @@ router.post("/reset-password/:user_id/:token", async(req,res)=>{
   const {user_id, token} = req.params;
   const  {password} = req.body;
 
-  const sql = `SELECT email, password  FROM users WHERE user_id = ${user_id}`;
-  db.query(sql, async  (err, result)=> {
-     if (err) throw err;
-
-    const jwt_secret = secret + result[0].password;
+  try{
+    const decodedToken = jwt.verify(token, secret);
+    const email = decodedToken.email;
     //update password
-    try{
-      const verify = jwt.verify(token, jwt_secret);
-      const hashedPwd = await bcrypt.hash(password, 10);
-      const sql = `UPDATE users SET password = "${hashedPwd}" where user_id=${user_id}`;
-      db.query(sql,  (err, result)=> {
-        if (err) throw err;
-        console.log("1 record updated");
-      });
-      //render page to direct users to login 
-      res.render("index", {email: verify.email, status:"verified"})
-    }
-    catch(error){
-      res.json({message: "Something went wrong"});
-    }
-  })
+    const hashedPwd = await bcrypt.hash(password, 10);
+    const sql = `UPDATE users SET password = "${hashedPwd}" where email=${email}`;
+    db.query(sql,  (err, result)=> {
+      if (err) throw err;
+      console.log("1 record updated");
+    });
+    //render page to direct users to login 
+    res.render("index", {email: email, status:"password updated"})
+
+  } catch(error){
+    res.json({message: "Something went wrong"});
+    console.log(error)
+  } 
 })
-
-
-
 module.exports= router
