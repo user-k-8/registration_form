@@ -64,10 +64,10 @@ body('password').isLength({ min: 8 })
       if (err) throw err;
      console.log(result);
 
-     if (result[0]) {
+     if (result[0].email) {
         console.log("email already registered")
         return res.sendStatus(409); //Conflict 
-     }else{
+     }
     
     //encrypt the password
     const hashedPwd = await bcrypt.hash(password, 10);
@@ -77,10 +77,11 @@ body('password').isLength({ min: 8 })
         db.query(sql,  (err, result)=> {
           if (err) throw err;
           console.log("1 record inserted");
+          return res.status(200).json({message: "Registration successful"})
         });
   
-    return res.status(200).json({message: "Registration successful"})
-}});
+    
+});
 
 })
 
