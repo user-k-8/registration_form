@@ -29,7 +29,8 @@ const Profile = () => {
       method: 'GET',
       headers: {
         'access-token': token
-    }
+    },
+    mode: 'cors',
   })
   .then(response => response.json())
   .then(data => {

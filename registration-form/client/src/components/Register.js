@@ -66,6 +66,7 @@ const handleInputChange = event=>{
         headers: {
             'Content-Type': 'application/json'
         },
+        mode: 'cors',
         body: JSON.stringify(form)
       })
       .then(response => {
@@ -97,6 +98,7 @@ const submitGoogleUser =(user)=>{
       headers: {
           'Content-Type': 'application/json'
       },
+      mode: 'cors',
       body: JSON.stringify(user)
     })
     .then(response => response.json())
