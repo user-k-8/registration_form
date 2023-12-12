@@ -28,9 +28,6 @@ const verifyJwt = (req, res, next)=>{
 
 router.get('/profile-info', verifyJwt, (req, res)=>{
 
-  res.header('Access-Control-Allow-Origin', process.env.url);
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-
   return res.json("Authenticated")
 
 })
@@ -47,9 +44,6 @@ body('password').isLength({ min: 8 })
                 .matches( /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$&+,:;=?@#|'<>.^*()%!-]).{8,}$/),
 ],
  async (req, res)=>{
-
-  res.header('Access-Control-Allow-Origin', process.env.url);
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
 
   const errors = validationResult(req);
 
@@ -87,9 +81,6 @@ body('password').isLength({ min: 8 })
 
 router.post('/login',  async (req, res)=>{
 
-   res.header('Access-Control-Allow-Origin', process.env.url);
-   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-
     const {email, password}= req.body
 
     const sql = `SELECT email, password, user_id, username  FROM users WHERE email = "${email}"`;
@@ -122,9 +113,6 @@ router.post('/login',  async (req, res)=>{
 
 router.post('/googlelogin',  async (req, res)=>{
 
-  res.header('Access-Control-Allow-Origin', process.env.url);
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-
   const {username,email, rememberMe}= req.body
      
      //check for email
@@ -149,9 +137,6 @@ router.post('/googlelogin',  async (req, res)=>{
 })
 
 router.post('/forgot-password', async(req,res)=>{
-
-  res.header('Access-Control-Allow-Origin', process.env.url);
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
 
   const {email} =req.body;
 //check if user exists
