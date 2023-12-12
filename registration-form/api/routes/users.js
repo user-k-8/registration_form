@@ -59,8 +59,9 @@ body('password').isLength({ min: 8 })
      console.log(result);
 
      if (result[0]) {
+         
         console.log("email already registered")
-        return res.sendStatus(409); //Conflict 
+        return res.json({status: 409}) //Conflict 
      }
     
     //encrypt the password
