@@ -64,7 +64,7 @@ body('password').isLength({ min: 8 })
       if (err) throw err;
      console.log(result);
 
-     if (result !=[ ]) {
+     if (result !=[]) {
         console.log("email already registered")
         return res.sendStatus(409); //Conflict 
      }else{
