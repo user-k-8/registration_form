@@ -1,10 +1,13 @@
 import React from 'react'
 import logo from './img/Logo (1).png'
 import { useNavigate } from 'react-router-dom'
+import { ClipLoader } from 'react-spinners';
 
 const ForgotPassword = () => {
 
     const navigate = useNavigate();
+
+    const [loading, setLoading] = React.useState("none");
 
     const [form, setForm] = React.useState( {
         email:"",
@@ -18,6 +21,7 @@ const ForgotPassword = () => {
     const handleSubmit =(event)=>{
       event.preventDefault();
      
+      setLoading("flex")
       fetch('https://registration-form-tv9c.onrender.com/api/forgot-password', {
         method: 'POST',
         headers: {
@@ -30,6 +34,7 @@ const ForgotPassword = () => {
     .then(data => {
         // response data
         console.log('Response from server:', data);
+        setLoading("none")
         if(data.status === 404){
           alert(data.message)
         }
@@ -55,7 +60,7 @@ const ForgotPassword = () => {
               
                 <form onSubmit={handleSubmit}>        
                   <input type="email" id="email" name="email" value={form.email} placeholder='Email'  onChange={handleInputChange} required/> 
-                  <button type='submit'>Submit</button>
+                  <button type='submit'>Submit <span style={{display: loading}}> <ClipLoader color={'white'} size={25}/></span></button>
               </form>
             </div>
         </div>

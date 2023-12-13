@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { GoogleLogin } from '@react-oauth/google';
 import {jwtDecode} from 'jwt-decode'
 import { Link } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
 
 const Register = () => {
 
@@ -15,6 +16,8 @@ const Register = () => {
     rememberMe: false
     
   }); 
+
+const [loading, setLoading] = React.useState("none");
 
 const handleInputChange = event=>{  
     const {name, value, type, checked} = event.target
@@ -58,7 +61,7 @@ const handleInputChange = event=>{
  
  const handleSubmit = (event)=>{
      event.preventDefault();
-
+    setLoading("flex")
      if(correctInput.username && correctInput.password){
 
       fetch('https://registration-form-tv9c.onrender.com/api/register', {
@@ -72,6 +75,7 @@ const handleInputChange = event=>{
       .then(data => {
         //  response data from the server
         console.log('server response', data.status)
+        setLoading("none")
         if(data.status===409){
           alert('Email already registered')
         }
@@ -163,7 +167,7 @@ const submitGoogleUser =(user)=>{
                       <input type="checkbox" id="rememberMe" name='rememberMe' checked={form.rememberMe} onChange={handleInputChange}/>    
                       <label htmlFor="rememberMe" > Remember Me</label>
                   </div>
-                  <button type='submit'>Register</button>
+                  <button type='submit' className='submit-btn'>Register <span style={{display: loading}}> <ClipLoader color={'white'} size={25} /></span></button>
               </form>
               <Link to='/login' style={{textDecoration: "none"}}><h4 style={{color: "black", fontWeight:"400"}}>Already have an account? <span style={{color: "orange"}}>Log in</span></h4></Link>
               <Link to='/forgot-password' style={{textDecoration: "none"}}><h4 style={{color: "black", fontWeight:"400"}}> Forgot Password? ▶ </h4></Link>

@@ -58,6 +58,12 @@ body{
   margin-top: -20px;
 }
 
+.submit-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .google-btn-container{
   width:90%;
   margin-left: auto;
