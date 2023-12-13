@@ -53,32 +53,24 @@ body('password').isLength({ min: 8 })
  }
 
  const {username, email, password, rememberMe}= req.body
-   //check for duplilcate usernames in db
-    const sql = `SELECT email  FROM users WHERE email = '${email}'`;
-    db.query(sql,  (err, result)=> {
-      if (err) throw err;
-     console.log(result);
-
-     if (!result[0]) {
     
-       //encrypt the password
-      const hashedPwd = bcrypt.hash(password, 10);
+     //encrypt the password
+     const hashedPwd = bcrypt.hash(password, 10);
     
-    //store the new user
-        const sql = `INSERT INTO users (username, email, password, rememberMe) VALUES ( '${username}', '${email}', '${hashedPwd}', ${rememberMe})`;
+    //store the new user    
+      const sql = `INSERT INTO users (username, email, password, rememberMe)
+        SELECT  '${username}', '${email}', '${hashedPwd}', ${rememberMe}
+        WHERE NOT EXISTS (
+            SELECT 1 FROM your_table_name WHERE email = '${email}'
+        );`
         db.query(sql,  (err, result)=> {
           if (err) throw err;
+          console.log(result);
           console.log('1 record inserted');
          
         });
     
-     }else{
-      console.log('email already registered')
-      return res.status(409).send({status: 409}); //Conflict 
-     }
-    
      return res.status(200).json({status: 200}); 
-});
 
 })
 
