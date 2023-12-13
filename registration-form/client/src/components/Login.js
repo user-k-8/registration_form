@@ -34,11 +34,11 @@ const handleSubmit =(event)=>{
     mode: 'cors',
     body: JSON.stringify(form)
 })
-.then(response => response.json())
+.then(response=> {response.json()
+  setLoading("none")})
 .then(data => {
     // response data
     console.log('Response from server:', data.token);
-    setLoading("none")
     if(data.status==="404"){
       alert('Account does not exist! Enter correct email or register for an account')
     }

@@ -71,11 +71,11 @@ const handleInputChange = event=>{
         },
         mode: 'cors',
         body: JSON.stringify(form)
-      }).then(response=> response.json())
+      }).then(response=> {response.json()
+        setLoading("none")})
       .then(data => {
         //  response data from the server
         console.log('server response', data.status)
-        setLoading("none")
         if(data.status===409){
           alert('Email already registered')
         }

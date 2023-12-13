@@ -30,11 +30,11 @@ const ForgotPassword = () => {
         mode: 'cors',
         body: JSON.stringify(form)
     })
-    .then(response => response.json())
+    .then(response=> {response.json()
+      setLoading("none")})
     .then(data => {
         // response data
         console.log('Response from server:', data);
-        setLoading("none")
         if(data.status === 404){
           alert(data.message)
         }
