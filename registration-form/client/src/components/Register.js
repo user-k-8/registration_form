@@ -28,7 +28,7 @@ const handleInputChange = event=>{
 
  const validateNameInput= (event)=>{
 
-  const updatedForm = {...form, [event.target.name]: event.target.value}
+  const updatedForm = {...form, [event.target.name]: event.target.value.trim()}
   setForm(updatedForm)
   const namePattern = /^[A-Za-z]+$/; 
   const namevalue = updatedForm.username.trim();
