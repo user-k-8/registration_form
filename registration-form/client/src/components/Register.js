@@ -44,7 +44,7 @@ const handleInputChange = event=>{
 
  const validatePasswordInput =(event)=>{
 
-   const updatedForm = {...form, [event.target.name]: event.target.value}
+   const updatedForm = {...form, [event.target.name]: event.target.value.trim()}
   setForm(updatedForm)
   const passwordValue =  updatedForm.password.trim();
   const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$&+,:;=?@#|'<>.^*()%!-]).{8,}$/;
