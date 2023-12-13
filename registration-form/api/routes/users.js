@@ -200,7 +200,7 @@ router.get('/reset-password/:user_id/:token', async(req,res)=>{
     res.render('index', {email: email, status:'password not updated'})
    
 }catch(error){
-  res.send('Not verified')
+  res.send('System error. Please try again later.')
   console.log(error)
 }
 })
