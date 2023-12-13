@@ -62,7 +62,7 @@ body('password').isLength({ min: 8 })
         SELECT  '${username}', '${email}', '${hashedPwd}', ${rememberMe}
         WHERE NOT EXISTS (
             SELECT 1 FROM your_table_name WHERE email = '${email}'
-        );`
+        )`
         db.query(sql,  (err, result)=> {
           if (err) throw err;
           console.log(result);
