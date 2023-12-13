@@ -55,7 +55,7 @@ body('password').isLength({ min: 8 })
  const {username, email, password, rememberMe}= req.body
     
      //encrypt the password
-     const hashedPwd = bcrypt.hash(password, 10);
+     const hashedPwd = await bcrypt.hash(password, 10);
     
     //store the new user    
       const sql = `INSERT INTO users (username, email, password, rememberMe)
