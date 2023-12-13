@@ -49,7 +49,7 @@ body('password').isLength({ min: 8 })
 
   if (!errors.isEmpty()) {
     console.log(errors)
-    return res.status(400).json({ errors: errors.array() });
+    return res.status(400).json({status:400, message: "Invalid Imputs" });
  }
 
  const {username, email, password, rememberMe}= req.body
@@ -57,7 +57,7 @@ body('password').isLength({ min: 8 })
      //encrypt the password
      const hashedPwd = await bcrypt.hash(password, 10);
     
-    //store the new user    
+    //store the new user  if not exists
       const sql = `INSERT INTO users (username, email, password, rememberMe) SELECT  '${username}', '${email}', '${hashedPwd}', ${rememberMe} FROM dual WHERE NOT EXISTS (SELECT 1 FROM users WHERE email = '${email}' )`
         db.query(sql,  (err, result)=> {
           if (err) throw err;

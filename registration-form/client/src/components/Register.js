@@ -75,6 +75,9 @@ const handleInputChange = event=>{
         if(data.status===409){
           alert('Email already registered')
         }
+        else if(data.status === 400){
+          alert("Invalid Inputs")
+        }
         else{
           alert('Registration successful!');
           navigate('/login')    
