@@ -59,9 +59,9 @@ body('password').isLength({ min: 8 })
      console.log(result);
 
      if (!result[0]) {
-
+    
        //encrypt the password
-      const hashedPwd = bcrypt.hashSync(password, 10);
+      const hashedPwd = bcrypt.hash(password, 10);
     
     //store the new user
         const sql = `INSERT INTO users (username, email, password, rememberMe) VALUES ( "${username}", "${email}", "${hashedPwd}", ${rememberMe})`;
