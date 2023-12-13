@@ -54,18 +54,14 @@ body('password').isLength({ min: 8 })
  const {username, email, password, rememberMe}= req.body
    //check for duplilcate usernames in db
     const sql = `SELECT email  FROM users WHERE email = "${email}"`;
-    db.query(sql, async  (err, result)=> {
+    db.query(sql,  (err, result)=> {
       if (err) throw err;
      console.log(result);
 
-     if (result[0]) {
-         
-        console.log("email already registered")
-        return res.json({status: 409}) //Conflict 
-     }
-    
-    //encrypt the password
-    const hashedPwd = await bcrypt.hash(password, 10);
+     if (!result[0]) {
+
+       //encrypt the password
+      const hashedPwd = bcrypt.hashSync(password, 10);
     
     //store the new user
         const sql = `INSERT INTO users (username, email, password, rememberMe) VALUES ( "${username}", "${email}", "${hashedPwd}", ${rememberMe})`;
@@ -74,8 +70,13 @@ body('password').isLength({ min: 8 })
           console.log("1 record inserted");
           return res.status(200).json({message: "Registration successful"})
         });
-  
     
+     }else{
+      console.log("email already registered")
+      return res.status(409).send({status: 409}); //Conflict 
+     }
+    
+   
 });
 
 })
@@ -103,8 +104,7 @@ router.post('/login',  async (req, res)=>{
             const username = result[0].username
             //generate token
             const token = jwt.sign({user_id: user_id, username: username, email:email}, secret, {expiresIn: '300m'});
-            return res.json({Login: true, token});   
-    
+            return res.json({Login: true, token});    
         } 
         else {
           return  res.status(401).send({status: "401"});//unauthorised
@@ -234,5 +234,7 @@ router.post("/reset-password/:user_id/:token", async(req,res)=>{
     res.json({message: "Something went wrong"});
     console.log(error)
   } 
-})
+});
+
+
 module.exports= router
