@@ -68,7 +68,7 @@ body('password').isLength({ min: 8 })
         db.query(sql,  (err, result)=> {
           if (err) throw err;
           console.log("1 record inserted");
-          return res.status(200).json({message: "Registration successful"})
+         
         });
     
      }else{
