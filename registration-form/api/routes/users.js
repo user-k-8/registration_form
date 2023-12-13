@@ -63,10 +63,15 @@ body('password').isLength({ min: 8 })
           if (err) throw err;
           console.log(result);
           console.log('1 record inserted');
+          if(result.affectedRows ==1){
+            return res.status(200).json({status: 200}); 
+          }else{
+            return res.status(409).json({status: 409}); //Conflict
+          }
          
         });
     
-     return res.status(200).json({status: 200}); 
+    
 
 })
 
