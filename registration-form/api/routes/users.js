@@ -76,7 +76,7 @@ body('password').isLength({ min: 8 })
       return res.status(409).send({status: 409}); //Conflict 
      }
     
-   
+     return res.status(200).json({status: 200}); 
 });
 
 })
