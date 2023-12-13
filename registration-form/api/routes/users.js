@@ -1,7 +1,6 @@
 const express= require('express');
 const router = express.Router()
 const bcrypt = require('bcrypt');
-const { body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer')
 const db = require('../db');
@@ -32,32 +31,16 @@ router.get('/profile-info', verifyJwt, (req, res)=>{
 
 })
 
-router.post('/register', [
-// Validate name
-body('username').isAlpha().isLength({ min: 3 }),
+router.post('/register',
 
-// Validate email
-body('email').isEmail(),
-
-// Validate password
-body('password').isLength({ min: 8 })
-                .matches( /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$&+,:;=?@#|'<>.^*()%!-]).{8,}$/),
-],
  async (req, res)=>{
-
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    console.log(errors)
-    return res.status(400).json({ errors: errors.array() });
- }
 
  const {username, email, password, rememberMe}= req.body
     
      //encrypt the password
      const hashedPwd = await bcrypt.hash(password, 10);
     
-    //store the new user    
+    //store the new user  if not exists
       const sql = `INSERT INTO users (username, email, password, rememberMe) SELECT  '${username}', '${email}', '${hashedPwd}', ${rememberMe} FROM dual WHERE NOT EXISTS (SELECT 1 FROM users WHERE email = '${email}' )`
         db.query(sql,  (err, result)=> {
           if (err) throw err;
