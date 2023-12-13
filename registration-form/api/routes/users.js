@@ -216,7 +216,7 @@ router.post('/reset-password/:user_id/:token', async(req,res)=>{
     const email = decodedToken.email;
     //update password
     const hashedPwd = await bcrypt.hash(password, 10);
-    const sql = `UPDATE users SET password = '${hashedPwd}' where email=${email}`;
+    const sql = `UPDATE users SET password = '${hashedPwd}' where email='${email}'`;
     db.query(sql,  (err, result)=> {
       if (err) throw err;
       console.log('1 record updated');
