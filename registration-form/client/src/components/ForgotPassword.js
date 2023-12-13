@@ -60,7 +60,7 @@ const ForgotPassword = () => {
               
                 <form onSubmit={handleSubmit}>        
                   <input type="email" id="email" name="email" value={form.email} placeholder='Email'  onChange={handleInputChange} required/> 
-                  <button type='submit'>Submit <span style={{display: loading}}> <ClipLoader color={'white'} size={25}/></span></button>
+                  <button type='submit' className='submit-btn'>Submit <span style={{display: loading}}> <ClipLoader color={'white'} size={25}/></span></button>
               </form>
             </div>
         </div>

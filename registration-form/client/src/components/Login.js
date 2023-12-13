@@ -24,7 +24,7 @@ const handleInputChange = event=>{
 
 const handleSubmit =(event)=>{
   event.preventDefault();
-  
+
   setLoading("flex")
   fetch('https://registration-form-tv9c.onrender.com/api/login', {
     method: 'POST',
@@ -114,7 +114,7 @@ const submitGoogleUser =(user)=>{
                 <form onSubmit={handleSubmit}>        
                   <input type="email" id="email" name="email" value={form.email} placeholder='Email'  onChange={handleInputChange} required/> 
                   <input type="password" id="password" name="password" value={form.password} placeholder='Password' onChange={handleInputChange} required/>
-                  <button type='submit'>Log in <span style={{display: loading}}> <ClipLoader color={'white'} size={25}/></span></button>
+                  <button type='submit' className='submit-btn'>Log in <span style={{display: loading}}> <ClipLoader color={'white'} size={25}/></span></button>
               </form>
                <Link to='/' style={{textDecoration: "none"}}><h4 style={{color: "black", fontWeight:"400"}}>Don't have an account? <span style={{color: "orange"}}>Register</span></h4></Link>
                <Link to='/forgot-password' style={{textDecoration: "none"}}><h4 style={{color: "black", fontWeight:"400"}}> Forgot Password? ▶ </h4></Link>
