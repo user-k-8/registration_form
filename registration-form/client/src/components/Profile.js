@@ -7,13 +7,40 @@ const Profile = () => {
 
   const [profileInfoDisplay, setProfileInfoDisplay] = React.useState("none")
   const [buttonDisplay, setButtonDisplay] = React.useState("block")
-
+  const [userInfo, setUserInfo] = React.useState("")
   const token = localStorage.getItem("token");
-  const decodedToken = token && token!== 'undefined' ? jwtDecode(token) : "";
-  const username = decodedToken.username
-  const email = decodedToken.email
 
-  if(!token || token==='undefined'){
+
+React.useEffect(()=>{
+
+  fetch('https://registration-form-tv9c.onrender.com/api/profile-info', {
+    method: 'GET',
+    headers: {
+      'access-token': token
+  },
+  mode: 'cors',
+})
+.then(response => response.json())
+.then(data => {
+    // response data
+    console.log('Response from server:', data);
+    if(data.username){
+       setUserInfo(data)
+    }else{
+      alert("You are not authenticated")
+    } 
+})
+.catch(error => {
+    console.log('Error:', error);
+});
+},[token]);
+
+const showProfileInfo=()=>{
+    setProfileInfoDisplay("block");
+    setButtonDisplay("none");
+}
+
+  if(!token || token===undefined){
     return (
        <div className='redirect-container'>
           <img src={logo} alt=''/>
@@ -23,40 +50,21 @@ const Profile = () => {
     )
 }
 
-  const showProfileInfo = ()=>{
 
-    fetch('https://registration-form-tv9c.onrender.com/api/profile-info', {
-      method: 'GET',
-      headers: {
-        'access-token': token
-    },
-    mode: 'cors',
-  })
-  .then(response => response.json())
-  .then(data => {
-      // response data
-      console.log('Response from server:', data);
-      if(data === "Authenticated"){
-          setProfileInfoDisplay("block");
-          setButtonDisplay("none")
-      }else{
-        alert("You are not authenticated")
-      } 
-  })
-  .catch(error => {
-      console.log('Error:', error);
-  });
-  }
+
+
+
+// https://registration-form-tv9c.onrender.com
 
 return (
 <div className='profile'>
     <div className='profile-container'>
         <img src={logo} alt=''/>
         <div className='profile-image'></div>
-        <h1>Welcome, {username}!</h1>
+        <h1>Welcome, {userInfo.username}!</h1>
         <h2 style={{textDecoration: "underline", display: profileInfoDisplay}}>Profile Information</h2>
-        <span style={{ display: profileInfoDisplay}}> <span style={{fontWeight: "600"}}>Name: </span> {username}</span><br/>
-        <span  style={{ display: profileInfoDisplay}}><span style={{fontWeight: "600"}}>Email: </span> {email}</span><br/>
+        <span style={{ display: profileInfoDisplay}}> <span style={{fontWeight: "600"}}>Name: </span> {userInfo.username}</span><br/>
+        <span  style={{ display: profileInfoDisplay}}><span style={{fontWeight: "600"}}>Email: </span> {userInfo.email}</span><br/>
         <button style={{display: buttonDisplay}} className='profile-btn' onClick={showProfileInfo}>Show Profile Information</button>
     </div>
 </div>

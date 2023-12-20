@@ -20,6 +20,7 @@ const verifyJwt = (req, res, next)=>{
       if(err){
         return res.json('Not Authenticated')
       }else{
+        req.body.userInfo = decoded;
         next();
       }
   })
@@ -27,8 +28,8 @@ const verifyJwt = (req, res, next)=>{
 }
 
 router.get('/profile-info', verifyJwt, (req, res)=>{
-
-  return res.json('Authenticated')
+  console.log(req.body.userInfo)
+  return res.status(200).json(req.body.userInfo)
 
 })
 
